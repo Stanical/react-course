@@ -1,15 +1,30 @@
-import ProfileCard from "./ProfileCard";
+import './App.css'
+import { useState } from "react";
+import AnimalShow from "./AnimalShow";
 
-function App() {
-    return(
-        <div>
-            <div>Personal Digital Assistants</div>
+function getRandomAnimal() {
+  const animals = ["bird", "cat", "cow", "dog", "gator", "horse"];
 
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
-        </div>
-    )
+  return animals[Math.floor(Math.random() * animals.length)];
 }
 
-export default App
+function App() {
+  const [animals, setAnimals] = useState([]);
+
+  const handleClick = () => {
+    setAnimals([...animals, getRandomAnimal()]);
+  };
+
+  const renderedAnimals = animals.map((animal, index) => {
+    return <AnimalShow anim={animal} key={index} />;
+  });
+
+  return (
+    <div className='app'>
+      <button onClick={handleClick}>Add Animal</button>
+      <div className='animal-list'>{renderedAnimals}</div>
+    </div>
+  );
+}
+
+export default App;
